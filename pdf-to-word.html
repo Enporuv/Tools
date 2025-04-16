@@ -1,168 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF to Word Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
 
-    <title>Free PDF to Word Converter | Online & Easy Tool</title>
-    <meta name="description" content="Convert your PDF files to editable Word documents (DOCX) online for free. Choose compression levels for optimized images. Fast, secure, and user-friendly.">
-    <meta name="keywords" content="pdf to word, convert pdf to docx, pdf converter, online converter, free tool, pdf to editable word, optimize images pdf">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="YOUR_CANONICAL_URL">
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 500px;
+    }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
 
-    <style>
-        /* CSS content remains unchanged for brevity */
-    </style>
+    .file-input-wrapper {
+      border: 2px dashed #ccc;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .file-input-wrapper.file-selected {
+      border-color: #4caf50;
+      background-color: #e8f5e9;
+    }
+
+    .file-input-wrapper input {
+      display: none;
+    }
+
+    .status {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .status.success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .status.error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .status.processing {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:disabled {
+      background-color: #6c757d;
+    }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
 </head>
+
 <body>
-
-<header class="header">
-    <div class="container">
-        <h1>PDF to Word Converter</h1>
-        <p class="subtitle">Easily convert your PDFs into editable Word documents</p>
+  <div class="container">
+    <h1>PDF to Word Converter</h1>
+    <label class="file-input-wrapper" id="file-input-wrapper">
+      <span id="file-name-display">Click or Drag & Drop PDF Here</span>
+      <input type="file" id="pdf-file" accept="application/pdf">
+    </label>
+    <select id="compression-level">
+      <option value="none">No Compression</option>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+    </select>
+    <button id="convert-button">Convert to Word</button>
+    <div id="status-message" class="status"></div>
+    <div id="download-link-container" style="display: none; text-align: center; margin-top: 1rem;">
+      <a id="download-link" href="#" download>Download Word File</a>
     </div>
-    <div class="ad-placeholder ad-banner-header">
-        <p>Advertisement</p>
-    </div>
-</header>
+    <footer>
+      &copy; <span id="current-year"></span> Your Company. All rights reserved.
+    </footer>
+  </div>
 
-<main class="main-content">
-    <div class="container">
-        <section class="converter-tool">
-            <h2>Upload Your PDF</h2>
-            <div id="conversion-interface">
-                <div class="file-input-wrapper">
-                    <input type="file" id="pdf-file" name="pdfFile" accept=".pdf" required>
-                    <label for="pdf-file" class="file-input-label">
-                        <span id="file-name-display">Click or Drag & Drop PDF Here</span>
-                    </label>
-                </div>
-
-                <div class="options">
-                    <label for="compression-level">Image Compression:</label>
-                    <select id="compression-level" name="compressionLevel">
-                        <option value="low">Low (Best Quality, Larger File)</option>
-                        <option value="medium" selected>Medium (Good Balance)</option>
-                        <option value="high">High (Smaller File, Lower Quality)</option>
-                    </select>
-                </div>
-
-                <button type="button" id="convert-button" class="cta-button">Convert to Word</button>
-
-                <div id="status-message" class="status" aria-live="polite"></div>
-                <div id="download-link-container" class="download-section" style="display: none;">
-                    <a href="#" id="download-link" class="cta-button download-button" download>Download Word File</a>
-                </div>
-            </div>
-        </section>
-
-        <div class="ad-placeholder ad-inline">
-            <p>Advertisement</p>
-        </div>
-
-        <section class="features">
-            <h2>Why Choose Our Tool?</h2>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <h3>Easy to Use</h3>
-                    <p>Simple drag-and-drop interface.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>Image Optimization</h3>
-                    <p>Control image quality and file size.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>Accurate Conversion</h3>
-                    <p>Maintains layout and formatting (backend dependent).</p>
-                </div>
-                <div class="feature-item">
-                    <h3>Secure & Private</h3>
-                    <p>Files are processed securely (ensure your backend implements this).</p>
-                </div>
-            </div>
-        </section>
-    </div>
-</main>
-
-<footer class="footer">
-    <div class="ad-placeholder ad-banner-footer">
-        <p>Advertisement</p>
-    </div>
-    <div class="container">
-        <p>&copy; <span id="current-year"></span> Your Website Name. All Rights Reserved.</p>
-    </div>
-</footer>
-
-<script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const pdfFileInput = document.getElementById('pdf-file');
-        const fileNameDisplay = document.getElementById('file-name-display');
-        const fileInputWrapper = document.querySelector('.file-input-wrapper');
-        const compressionSelect = document.getElementById('compression-level');
-        const convertButton = document.getElementById('convert-button');
-        const statusMessage = document.getElementById('status-message');
-        const downloadLinkContainer = document.getElementById('download-link-container');
-        const downloadLink = document.getElementById('download-link');
+      const pdfFileInput = document.getElementById('pdf-file');
+      const fileNameDisplay = document.getElementById('file-name-display');
+      const fileInputWrapper = document.querySelector('.file-input-wrapper');
+      const compressionSelect = document.getElementById('compression-level');
+      const convertButton = document.getElementById('convert-button');
+      const statusMessage = document.getElementById('status-message');
+      const downloadLinkContainer = document.getElementById('download-link-container');
+      const downloadLink = document.getElementById('download-link');
 
-        // Update footer year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+      // Show selected file name
+      pdfFileInput.addEventListener('change', () => {
+        const file = pdfFileInput.files[0];
+        if (file) {
+          fileNameDisplay.textContent = file.name;
+          fileInputWrapper.classList.add('file-selected');
+        } else {
+          fileNameDisplay.textContent = "Click or Drag & Drop PDF Here";
+          fileInputWrapper.classList.remove('file-selected');
+        }
+      });
 
-        // Display selected file name
-        pdfFileInput.addEventListener('change', () => {
-            const file = pdfFileInput.files[0];
-            if (file) {
-                fileNameDisplay.textContent = file.name;
-                fileInputWrapper.classList.add('file-selected');
-            } else {
-                fileNameDisplay.textContent = 'Click or Drag & Drop PDF Here';
-                fileInputWrapper.classList.remove('file-selected');
-            }
-        });
+      // Convert Button Click
+      convertButton.addEventListener('click', async () => {
+        const file = pdfFileInput.files[0];
+        const compression = compressionSelect.value;
 
-        convertButton.addEventListener('click', async () => {
-            const file = pdfFileInput.files[0];
-            const compression = compressionSelect.value;
+        if (!file) {
+          statusMessage.textContent = "Please upload a PDF file first.";
+          statusMessage.className = "status error";
+          return;
+        }
 
-            if (!file) {
-                statusMessage.textContent = 'Please select a PDF file.';
-                statusMessage.className = 'status error';
-                return;
-            }
+        statusMessage.textContent = "Converting... Please wait.";
+        statusMessage.className = "status processing";
+        convertButton.disabled = true;
 
-            statusMessage.textContent = 'Converting...';
-            statusMessage.className = 'status processing';
+        const formData = new FormData();
+        formData.append('pdfFile', file);
+        formData.append('compressionLevel', compression);
 
-            const formData = new FormData();
-            formData.append('pdfFile', file);
-            formData.append('compressionLevel', compression);
+        try {
+          const response = await fetch('/api/convert-pdf-to-word', {
+            method: 'POST',
+            body: formData
+          });
 
-            try {
-                const response = await fetch('/api/convert', {
-                    method: 'POST',
-                    body: formData
-                });
+          if (!response.ok) throw new Error('Conversion failed.');
 
-                if (!response.ok) throw new Error('Conversion failed');
+          const result = await response.json();
+          downloadLink.href = result.downloadUrl;
+          downloadLinkContainer.style.display = 'block';
+          statusMessage.textContent = "Conversion successful!";
+          statusMessage.className = "status success";
+        } catch (error) {
+          console.error(error);
+          statusMessage.textContent = "Something went wrong. Please try again.";
+          statusMessage.className = "status error";
+        } finally {
+          convertButton.disabled = false;
+        }
+      });
 
-                const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-                downloadLink.href = url;
-                downloadLink.download = file.name.replace(/\.pdf$/i, '.docx');
-                downloadLinkContainer.style.display = 'block';
-
-                statusMessage.textContent = 'Conversion successful!';
-                statusMessage.className = 'status success';
-            } catch (error) {
-                statusMessage.textContent = 'An error occurred during conversion.';
-                statusMessage.className = 'status error';
-            }
-        });
+      // Auto-update year in footer
+      document.getElementById('current-year').textContent = new Date().getFullYear();
     });
-</script>
-
+  </script>
 </body>
+
 </html>
