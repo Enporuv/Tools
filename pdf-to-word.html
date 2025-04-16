@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Free PDF to Word Converter | Online & Easy Tool</title>
+    <meta name="description" content="Convert your PDF files to editable Word documents (DOCX) online for free. Choose compression levels for optimized images. Fast, secure, and user-friendly.">
+    <meta name="keywords" content="pdf to word, convert pdf to docx, pdf converter, online converter, free tool, pdf to editable word, optimize images pdf">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="YOUR_CANONICAL_URL">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Variables & Basic Reset --- */
+        :root {
+            --primary-color: #4a90e2;  /* Nice Blue */
+            --secondary-color: #50e3c2; /* Teal Accent */
+            --background-color: #f8f9fa; /* Light Gray */
+            --text-color: #333;
+            --heading-color: #2c3e50; /* Dark Blue/Gray */
+            --white-color: #ffffff;
+            --border-color: #dee2e6;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            color: var(--heading-color);
+            margin-bottom: 0.75em;
+            font-weight: 600;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 1.8rem; }
+        h3 { font-size: 1.3rem; }
+
+        p { margin-bottom: 1em; }
+        a { color: var(--primary-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Header --- */
+        .header {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 2rem 0 1rem;
+            text-align: center;
+        }
+        .header h1 { color: var(--white-color); font-weight: 700; }
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            flex-grow: 1; /* Pushes footer down */
+            padding: 3rem 0;
+        }
+
+        /* --- Converter Tool --- */
+        .converter-tool {
+            background-color: var(--white-color);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .converter-tool h2 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        /* File Input Styling */
+        .file-input-wrapper {
+            margin-bottom: 1.5rem;
+            position: relative; /* Needed for absolute positioning of label */
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            background-color: #fdfdfd;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+        .file-input-wrapper:hover {
+            border-color: var(--primary-color);
+            background-color: #f0f6ff;
+        }
+        .file-input-wrapper input[type="file"] {
+            /* Hide the default input but keep it accessible */
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10; /* Make sure input is clickable */
+        }
+        .file-input-label {
+            display: block; /* Make label fill the wrapper */
+            font-size: 1.1rem;
+            color: #555;
+            cursor: pointer;
+        }
+        .file-input-label span { /* Style the text inside the label */
+            display: inline-block;
+            padding: 0.5rem 1rem;
+        }
+        .file-input-wrapper.file-selected {
+            border-color: var(--success-color);
+            background-color: #e6f7ec;
+        }
+
+        /* Options Styling */
+        .options {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .options label {
+            font-weight: 600;
+            margin-right: 0.5rem; /* Keep space for inline view on larger screens */
+        }
+        .options select {
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            min-width: 200px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        .options select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+        }
+
+
+        /* Buttons */
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+        }
+        .cta-button:hover:not(:disabled) {
+            background-color: #357abd; /* Darker blue on hover */
+            transform: translateY(-2px);
+        }
+        .cta-button:disabled {
+            background-color: #a0c7e8;
+            cursor: not-allowed;
+        }
+        .download-button {
+            background-color: var(--success-color);
+            margin-top: 1rem; /* Add space above download button */
+        }
+        .download-button:hover {
+            background-color: #218838; /* Darker green */
+        }
+
+        /* Status & Download */
+        .status {
+            margin-top: 1.5rem;
+            font-weight: 600;
+            min-height: 1.5em; /* Prevent layout shift */
+        }
+        .status.success { color: var(--success-color); }
+        .status.error { color: var(--error-color); }
+        .status.processing { color: var(--primary-color); }
+
+        .download-section {
+            margin-top: 1rem; /* Consistent spacing */
+        }
+
+        /* --- Features Section --- */
+        .features {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .feature-item {
+            background-color: var(--white-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+        .feature-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--heading-color);
+            color: #ccc;
+            text-align: center;
+            padding-top: 1rem; /* Space above the ad */
+            margin-top: auto; /* Stick to bottom */
+        }
+        .footer .container {
+            padding: 1.5rem 20px;
+        }
+        .footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        .footer a { color: var(--secondary-color); }
+
+        /* --- Advertisement Placeholders --- */
+        .ad-placeholder {
+            background-color: #e9ecef; /* Light gray background */
+            border: 1px dashed #adb5bd; /* Dashed border */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d; /* Muted text color */
+            font-size: 0.9rem;
+            text-align: center;
+            min-height: 90px; /* Minimum height for visibility */
+            margin: 1.5rem auto; /* Spacing */
+            overflow: hidden; /* Ensure ad content fits */
+        }
+        /* Specific Ad Slot Styling (adjust as needed) */
+        .ad-banner-header {
+            min-height: 100px;
+            max-width: 100%;
+            margin: 0 0 1rem 0; /* No top/bottom margin within header */
+            background-color: rgba(0,0,0, 0.05); /* Slightly darker in header */
+        }
+        .ad-inline {
+            max-width: 728px; /* Example width */
+            margin: 2rem auto;
+        }
+        .ad-banner-footer {
+            min-height: 90px;
+            max-width: 100%;
+            margin: 0 auto 1.5rem auto; /* Space below ad before footer text */
+        }
+        /* Hide placeholder text when AdSense loads */
+        .ad-placeholder ins { display: block; /* Needed for AdSense */ }
+        .ad-placeholder ins[data-ad-status="unfilled"] ~ p,
+        .ad-placeholder ins:not([data-ad-status]) ~ p {
+            display: block; /* Show placeholder text if ad doesn't load */
+        }
+        .ad-placeholder ins[data-ad-status="filled"] ~ p {
+            display: none; /* Hide placeholder text if ad loads */
+        }
+
+
+        /* --- Responsiveness --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.6rem; }
+
+            .container { padding: 0 15px; }
+
+            .converter-tool { padding: 1.5rem; }
+
+            /* Make options stack vertically */
+            .options { flex-direction: column; align-items: stretch; }
+            .options label { margin-right: 0; margin-bottom: 0.5rem; text-align: left;} /* Align label left */
+            .options select { width: 100%; }
+
+            .feature-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 576px) {
+            h1 { font-size: 1.8rem; }
+            .header { padding: 1.5rem 0 0.5rem; }
+
+            .file-input-label { font-size: 1rem; }
+            .file-input-wrapper { padding: 1.5rem; }
+
+            .feature-grid { grid-template-columns: 1fr; }
+
+            .cta-button { width: 100%; padding: 0.9rem 1rem; font-size: 1rem;}
+            .download-button { width: 100%; }
+
+            .footer .container { padding: 1rem 15px; }
+        }
+    </style>
+
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <h1>PDF to Word Converter</h1>
+            <p class="subtitle">Easily convert your PDFs into editable Word documents</p>
+        </div>
+        <div class="ad-placeholder ad-banner-header">
+            <p>Advertisement</p> </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="converter-tool">
+                <h2>Upload Your PDF</h2>
+                <div id="conversion-interface">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="pdf-file" name="pdfFile" accept=".pdf" required>
+                        <label for="pdf-file" class="file-input-label">
+                            <span id="file-name-display">Click or Drag & Drop PDF Here</span>
+                        </label>
+                    </div>
+
+                    <div class="options">
+                        <label for="compression-level">Image Compression:</label>
+                        <select id="compression-level" name="compressionLevel">
+                            <option value="low">Low (Best Quality, Larger File)</option>
+                            <option value="medium" selected>Medium (Good Balance)</option>
+                            <option value="high">High (Smaller File, Lower Quality)</option>
+                        </select>
+                    </div>
+
+                    <button type="button" id="convert-button" class="cta-button">Convert to Word</button>
+
+                    <div id="status-message" class="status" aria-live="polite"></div>
+                    <div id="download-link-container" class="download-section" style="display: none;">
+                        <a href="#" id="download-link" class="cta-button download-button" download>Download Word File</a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="ad-placeholder ad-inline">
+                <p>Advertisement</p> </div>
+
+            <section class="features">
+                <h2>Why Choose Our Tool?</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h3>Easy to Use</h3>
+                        <p>Simple drag-and-drop interface.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Image Optimization</h3>
+                        <p>Control image quality and file size.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Accurate Conversion</h3>
+                        <p>Maintains layout and formatting (backend dependent).</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Secure & Private</h3>
+                        <p>Files are processed securely (ensure your backend implements this).</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+         <div class="ad-placeholder ad-banner-footer">
+             <p>Advertisement</p> </div>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Your Website Name. All Rights Reserved.</p>
+            </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pdfFileInput = document.getElementById('pdf-file');
+            const fileNameDisplay = document.getElementById('file-name-display');
+            const fileInputWrapper = document.querySelector('.file-input-wrapper');
+            const compressionSelect = document.getElementById('compression-level');
+            const convertButton = document.getElementById('convert-button');
+            const statusMessage = document.getElementById('status-message');
+            const downloadLinkContainer = document.getElementById('download-link-container');
+            const downloadLink = document.getElementById('download-link');
+            const currentYearSpan = document.getElementById('current-year');
+
+            // Set current year in footer
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+
+            // Update file name display on selection
+            pdfFileInput.addEventListener('change', () => {
+                if (pdfFileInput.files.length > 0) {
+                    const fileName = pdfFileInput.files[0].name;
+                    fileNameDisplay.textContent = fileName;
+                    fileInputWrapper.classList.add('file-selected');
+                    // Ensure status is reset if a new file is chosen after an error/success
+                    resetStatus();
+                } else {
+                    fileNameDisplay.textContent = 'Click or Drag & Drop PDF Here';
+                    fileInputWrapper.classList.remove('file-selected');
+                    resetStatus(); // Also reset status if selection is cleared
+                }
+            });
+
+             // Handle drag and drop
+            fileInputWrapper.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                fileInputWrapper.style.borderColor = 'var(--primary-color)';
+                fileInputWrapper.style.backgroundColor = '#f0f6ff'; // Add background feedback
+            });
+            fileInputWrapper.addEventListener('dragleave', () => {
+                // Only reset style if not already selected
+                 if (!fileInputWrapper.classList.contains('file-selected')) {
+                    fileInputWrapper.style.borderColor = 'var(--border-color)';
+                    fileInputWrapper.style.backgroundColor = '#fdfdfd';
+                 } else {
+                     fileInputWrapper.style.borderColor = 'var(--success-color)'; // Keep success border
+                     fileInputWrapper.style.backgroundColor = '#e6f7ec'; // Keep success bg
+                 }
+            });
+            fileInputWrapper.addEventListener('drop', (event) => {
+                event.preventDefault();
+                fileInputWrapper.style.borderColor = 'var(--border-color)'; // Reset border immediately
+                fileInputWrapper.style.backgroundColor = '#fdfdfd'; // Reset background immediately
+
+                if (event.dataTransfer.files.length > 0) {
+                    const file = event.dataTransfer.files[0];
+                    if (file.type === 'application/pdf') {
+                        pdfFileInput.files = event.dataTransfer.files;
+                        const changeEvent = new Event('change');
+                        pdfFileInput.dispatchEvent(changeEvent); // Updates UI via change handler
+                    } else {
+                        showStatus('Please drop a PDF file.', 'error');
+                        resetFileSelection(); // Clear input if wrong file type dropped
+                    }
+                }
+            });
+
+
+            // Handle Convert Button Click
+            convertButton.addEventListener('click', async () => {
+                const file = pdfFileInput.files[0];
+                const compressionLevel = compressionSelect.value;
+
+                if (!file) {
+                    showStatus('Please select a PDF file first.', 'error');
+                    return;
+                }
+
+                // Basic check for PDF type
+                if (file.type !== 'application/pdf') {
+                    showStatus('Invalid file type. Please select a PDF.', 'error');
+                    resetFileSelection(); // Clear the invalid selection
+                    return;
+                }
+
+                // --- UI Updates for Processing ---
+                convertButton.disabled = true;
+                convertButton.textContent = 'Converting...';
+                showStatus('Processing your PDF...', 'processing');
+                downloadLinkContainer.style.display = 'none'; // Hide old download link
+
+                // --- Backend Interaction ---
+                const formData = new FormData();
+                formData.append('pdfFile', file);
+                formData.append('compressionLevel', compressionLevel);
+
+                try {
+                    // ==========================================================
+                    // IMPORTANT: Replace '/api/convert' with your ACTUAL backend endpoint URL
+                    const backendUrl = '/api/convert';
+                    // ==========================================================
+
+                    const response = await fetch(backendUrl, {
+                        method: 'POST',
+                        body: formData,
+                        // Add any necessary headers like Authorization or CSRF tokens here if needed
+                        // headers: { 'Authorization': 'Bearer YOUR_TOKEN' }
+                    });
+
+                    // --- Handle Backend Response ---
+
+                    if (!response.ok) {
+                        // Attempt to parse error message from backend (assuming JSON format)
+                        let errorMsg = `Conversion failed. Server responded with status: ${response.status}`;
+                        try {
+                            const errorData = await response.json();
+                            errorMsg = errorData.message || errorData.error || errorMsg; // Look for common error fields
+                        } catch (e) {
+                            // If response is not JSON or empty, use the status text
+                            errorMsg = `Conversion failed: ${response.statusText} (Status: ${response.status})`;
+                        }
+                         // Revoke previous object URL if one exists before throwing error
+                        if (downloadLink.href && downloadLink.href.startsWith('blob:')) {
+                           window.URL.revokeObjectURL(downloadLink.href);
+                        }
+                        throw new Error(errorMsg);
+                    }
+
+                    // Process the successful response (assuming it's the Word file blob)
+                    const blob = await response.blob();
+
+                    // More robust MIME type checking for Word documents
+                    const wordMimeTypes = [
+                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+                        'application/msword', // .doc
+                        'application/octet-stream' // Generic binary, sometimes used by servers
+                    ];
+
+                    if (!wordMimeTypes.includes(blob.type)) {
+                         // If the type is unexpected, try reading as text to see if it's a JSON error
+                         let unexpectedContentMsg = `Backend returned unexpected content type: ${blob.type || 'Unknown'}`;
+                         try {
+                            const textError = await blob.text();
+                            const errorJson = JSON.parse(textError);
+                            unexpectedContentMsg = errorJson.message || errorJson.error || unexpectedContentMsg;
+                         } catch(e) { /* Ignore parsing error, stick with original message */ }
+                         // Revoke previous object URL if one exists
+                         if (downloadLink.href && downloadLink.href.startsWith('blob:')) {
+                            window.URL.revokeObjectURL(downloadLink.href);
+                         }
+                         throw new Error(unexpectedContentMsg);
+                    }
+
+                     // Revoke previous object URL before creating a new one (important for memory management)
+                     if (downloadLink.href && downloadLink.href.startsWith('blob:')) {
+                        window.URL.revokeObjectURL(downloadLink.href);
+                     }
+
+                    // Create a new object URL for the received blob
+                    const url = window.URL.createObjectURL(blob);
+
+                    // Prepare download link
+                    downloadLink.href = url;
+                    const originalFileName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+                    downloadLink.download = `${originalFileName}.docx`;
+
+                    // Show success and download link
+                    showStatus('Conversion Successful!', 'success');
+                    downloadLinkContainer.style.display = 'block'; // Show download button section
+
+                } catch (error) {
+                    console.error('Conversion Error:', error);
+                    // Display the error message from the caught error
+                    showStatus(`Error: ${error.message || 'An unknown error occurred.'}`, 'error');
+                     // Reset file input on error to allow re-selection
+                     resetFileSelection();
+
+                } finally {
+                    // Re-enable button regardless of success or failure
+                    convertButton.disabled = false;
+                    convertButton.textContent = 'Convert to Word';
+                }
+            });
+
+            // --- Helper Functions ---
+            function showStatus(message, type = 'info') { // types: info, success, error, processing
+                statusMessage.textContent = message;
+                statusMessage.className = `status ${type}`; // Reset classes and add new type
+            }
+
+            function resetStatus() {
+                statusMessage.textContent = '';
+                statusMessage.className = 'status';
+                downloadLinkContainer.style.display = 'none';
+                // Revoke object URL if it exists when status is reset
+                if (downloadLink.href && downloadLink.href.startsWith('blob:')) {
+                    window.URL.revokeObjectURL(downloadLink.href);
+                }
+                downloadLink.href = '#';
+                downloadLink.removeAttribute('download');
+            }
+
+            function resetFileSelection() {
+                pdfFileInput.value = ''; // Clear the selected file in the input
+                // Manually trigger change event to update UI (file name display, wrapper style)
+                const changeEvent = new Event('change');
+                pdfFileInput.dispatchEvent(changeEvent);
+                // We also call resetStatus here because clearing the file implies resetting the process
+                resetStatus();
+            }
+
+        });
+    </script>
+
+</body>
+</html>
