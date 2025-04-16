@@ -237,6 +237,8 @@
             box-shadow: var(--shadow-md);
             transition: var(--transition);
             border: 1px solid var(--light-gray);
+            display: flex; /* Added to ensure body stays below header */
+            flex-direction: column; /* Added */
         }
 
         .tool-card:hover {
@@ -257,7 +259,8 @@
             font-size: 1.75rem;
             width: 50px;
             height: 50px;
-            border-radius: 50%;
+            /* MODIFIED: Changed border-radius for square shape */
+            border-radius: var(--radius-sm);
             background-color: rgba(255,255,255,0.2);
             display: flex;
             align-items: center;
@@ -271,6 +274,10 @@
 
         .tool-card-body {
             padding: 1.5rem;
+            flex-grow: 1; /* Added */
+            display: flex; /* Added */
+            flex-direction: column; /* Added */
+            justify-content: space-between; /* Added */
         }
 
         .tool-description {
@@ -289,6 +296,7 @@
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
+            align-self: flex-start; /* Added */
         }
 
         .tool-btn:hover {
@@ -413,6 +421,7 @@
             background-color: var(--darker);
             color: white;
             padding: 4rem 0 2rem;
+            margin-top: auto; /* Push footer down */
         }
 
         .footer-grid {
@@ -495,11 +504,25 @@
             .hero-title {
                 font-size: 2.5rem;
             }
-            
+
             .nav-links {
-                display: none;
+                /* Basic mobile menu implementation: Hide by default */
+                 display: none;
+                 position: absolute;
+                 top: 100%; /* Position below header */
+                 left: 0;
+                 right: 0;
+                 background: var(--dark); /* Same as header or slightly darker */
+                 padding: 1rem;
+                 flex-direction: column;
+                 align-items: center;
+                 box-shadow: var(--shadow-md);
             }
-            
+
+             .nav-links.active { /* Class to toggle visibility */
+                 display: flex;
+             }
+
             .mobile-menu-btn {
                 display: block;
             }
@@ -509,21 +532,24 @@
             .hero {
                 padding: 4rem 0;
             }
-            
+
             .hero-title {
                 font-size: 2rem;
             }
-            
+
             .hero-subtitle {
                 font-size: 1.1rem;
             }
-            
+
             .section {
                 padding: 3rem 0;
             }
-            
+
             .section-title h2 {
                 font-size: 1.75rem;
+            }
+            .footer-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust footer columns */
             }
         }
 
@@ -531,18 +557,33 @@
             .container {
                 padding: 0 1rem;
             }
-            
+
             .hero-title {
                 font-size: 1.75rem;
             }
-            
+
             .tools-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Stack tools on smallest screens */
             }
-            
+
             .category-tabs {
                 justify-content: flex-start;
+                gap: 0.5rem; /* Reduce gap */
             }
+            .category-tab {
+                 padding: 0.5rem 1rem; /* Smaller tabs */
+            }
+             .footer-grid {
+                 grid-template-columns: 1fr; /* Stack footer columns */
+                 text-align: center;
+             }
+             .footer-col h3::after {
+                 left: 50%;
+                 transform: translateX(-50%); /* Center underline */
+             }
+             .social-links {
+                 justify-content: center; /* Center social links */
+             }
         }
     </style>
 </head>
@@ -554,13 +595,8 @@
                     <i class="fas fa-tools logo-icon"></i>
                     <span>ToolKit Pro</span>
                 </a>
-                <nav class="nav-links">
-                    <a href="#" class="nav-link">Home</a>
-                    <a href="#" class="nav-link">Image Tools</a>
-                    <a href="#" class="nav-link">PDF Tools</a>
-                    <a href="#" class="nav-link">Documents</a>
-                    <a href="#" class="nav-link">About</a>
-                </nav>
+                <nav class="nav-links"> <a href="#" class="nav-link">Home</a>
+                    <a href="#image-tools" class="nav-link">Image Tools</a> <a href="#pdf-tools" class="nav-link">PDF Tools</a> <a href="#document-tools" class="nav-link">Documents</a> <a href="#about" class="nav-link">About</a> </nav>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -581,38 +617,30 @@
         </div>
     </section>
 
-    <section class="section">
-        <div class="container">
+    <section id="tools-section" class="section"> <div class="container">
             <div class="section-title">
                 <h2>Popular Tools</h2>
             </div>
             <div class="category-tabs">
-                <div class="category-tab active">All Tools</div>
-                <div class="category-tab">Image Tools</div>
-                <div class="category-tab">PDF Tools</div>
-                <div class="category-tab">Documents</div>
-                <div class="category-tab">Other</div>
+                <div class="category-tab active" data-category="all">All Tools</div>
+                <div class="category-tab" data-category="image">Image Tools</div>
+                <div class="category-tab" data-category="pdf">PDF Tools</div>
+                <div class="category-tab" data-category="document">Documents</div>
+                <div class="category-tab" data-category="other">Other</div>
             </div>
             <div class="tools-grid">
-                <!-- Image Tools -->
-               <a href="/Tools/img-compress.html" class="tool-card">
-                     <div class="tool-card-header">
-                     <div class="tool-icon">
-                         <i class="fas fa-compress-alt"></i>
-                   </div>
-                    <div class="tool-title">Image Compressor</div>
-             </div>
-           </a>
-
+                <div class="tool-card" data-tool-category="image"> <div class="tool-card-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-compress-alt"></i>
+                        </div>
+                        <div class="tool-title">Image Compressor</div>
+                    </div>
                     <div class="tool-card-body">
                         <p class="tool-description">Reduce image file size without losing quality. Supports JPG, PNG, and WebP formats.</p>
-                        <a href="#" class="tool-btn">
-                            Use Tool <i class="fas fa-arrow-right"></i>
+                        <a href="/Tools/img-compress.html" class="tool-btn"> Use Tool <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
-                </div>
-
-                <div class="tool-card">
+                </div> <div class="tool-card" data-tool-category="image">
                     <div class="tool-card-header">
                         <div class="tool-icon">
                             <i class="fas fa-file-image"></i>
@@ -627,7 +655,7 @@
                     </div>
                 </div>
 
-                <div class="tool-card">
+                <div class="tool-card" data-tool-category="image">
                     <div class="tool-card-header">
                         <div class="tool-icon">
                             <i class="fas fa-crop"></i>
@@ -642,8 +670,7 @@
                     </div>
                 </div>
 
-                <!-- PDF Tools -->
-                <div class="tool-card">
+                <div class="tool-card" data-tool-category="pdf">
                     <div class="tool-card-header">
                         <div class="tool-icon">
                             <i class="fas fa-file-pdf"></i>
@@ -658,7 +685,7 @@
                     </div>
                 </div>
 
-                <div class="tool-card">
+                <div class="tool-card" data-tool-category="pdf">
                     <div class="tool-card-header">
                         <div class="tool-icon">
                             <i class="fas fa-file-export"></i>
@@ -673,7 +700,7 @@
                     </div>
                 </div>
 
-                <div class="tool-card">
+                <div class="tool-card" data-tool-category="pdf">
                     <div class="tool-card-header">
                         <div class="tool-icon">
                             <i class="fas fa-file-import"></i>
@@ -688,8 +715,7 @@
                     </div>
                 </div>
 
-                <!-- Document Tools -->
-                <div class="tool-card">
+                <div class="tool-card" data-tool-category="document">
                     <div class="tool-card-header">
                         <div class="tool-icon">
                             <i class="fas fa-file-word"></i>
@@ -704,7 +730,7 @@
                     </div>
                 </div>
 
-                <div class="tool-card">
+                <div class="tool-card" data-tool-category="document">
                     <div class="tool-card-header">
                         <div class="tool-icon">
                             <i class="fas fa-file-excel"></i>
@@ -719,7 +745,7 @@
                     </div>
                 </div>
 
-                <div class="tool-card">
+                <div class="tool-card" data-tool-category="document">
                     <div class="tool-card-header">
                         <div class="tool-icon">
                             <i class="fas fa-file-powerpoint"></i>
@@ -737,8 +763,7 @@
         </div>
     </section>
 
-    <section class="section features">
-        <div class="container">
+    <section id="features-section" class="section features"> <div class="container">
             <div class="section-title">
                 <h2>Why Choose Our Tools</h2>
             </div>
@@ -755,7 +780,7 @@
                         <i class="fas fa-lock"></i>
                     </div>
                     <h3 class="feature-title">Secure & Private</h3>
-                    <p class="feature-description">Your files are processed securely and never stored permanently on our servers.</p>
+                    <p class="feature-description">Your files are processed securely using HTTPS and automatically deleted after a short period.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -769,7 +794,7 @@
                         <i class="fas fa-tags"></i>
                     </div>
                     <h3 class="feature-title">100% Free</h3>
-                    <p class="feature-description">All our tools are completely free to use with no hidden charges or watermarks.</p>
+                    <p class="feature-description">All our core tools are completely free to use with generous limits.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -789,34 +814,30 @@
         </div>
     </section>
 
-    <section class="section cta">
-        <div class="container">
+    <section id="cta-section" class="section cta"> <div class="container">
             <div class="cta-content">
                 <h2 class="cta-title">Ready to Boost Your Productivity?</h2>
                 <p class="cta-description">Join thousands of professionals who use our tools daily to save time and work more efficiently.</p>
-                <a href="#" class="cta-btn">
-                    Explore All Tools <i class="fas fa-arrow-right"></i>
+                <a href="#tools-section" class="cta-btn"> Explore All Tools <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container">
+    <footer id="about"> <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
                     <h3>ToolKit Pro</h3>
                     <p style="color: var(--gray); margin-top: 1rem;">Premium online tools for creators, designers, and professionals.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h3>Image Tools</h3>
-                    <ul class="footer-links">
+                    <h3 id="image-tools">Image Tools</h3> <ul class="footer-links">
                         <li class="footer-link"><a href="#">Image Compressor</a></li>
                         <li class="footer-link"><a href="#">Image Converter</a></li>
                         <li class="footer-link"><a href="#">Image Resizer</a></li>
@@ -825,8 +846,7 @@
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h3>PDF Tools</h3>
-                    <ul class="footer-links">
+                    <h3 id="pdf-tools">PDF Tools</h3> <ul class="footer-links">
                         <li class="footer-link"><a href="#">PDF Compressor</a></li>
                         <li class="footer-link"><a href="#">PDF to Word</a></li>
                         <li class="footer-link"><a href="#">Word to PDF</a></li>
@@ -835,18 +855,21 @@
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
+                    <h3 id="document-tools">Company</h3> <ul class="footer-links">
                         <li class="footer-link"><a href="#">About Us</a></li>
                         <li class="footer-link"><a href="#">Contact</a></li>
                         <li class="footer-link"><a href="#">Privacy Policy</a></li>
                         <li class="footer-link"><a href="#">Terms of Service</a></li>
                         <li class="footer-link"><a href="#">Blog</a></li>
+                         <li class="footer-link" style="margin-top: 1rem; font-weight: bold;"><a href="#">Document Tools</a></li>
+                         <li class="footer-link"><a href="#">Document Converter</a></li>
+                         <li class="footer-link"><a href="#">Excel to PDF</a></li>
+                         <li class="footer-link"><a href="#">PPT to PDF</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 ToolKit Pro. All rights reserved.</p>
+                 <p>&copy; <span id="current-year"></span> ToolKit Pro. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -855,27 +878,69 @@
         // Mobile menu toggle functionality
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
-        
+
         mobileMenuBtn.addEventListener('click', () => {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.classList.toggle('active'); // Toggle active class for visibility
+            // Optional: Change icon on toggle
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
 
-        // Category tabs functionality
+        // Close mobile menu when a link is clicked
+        navLinks.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                }
+            });
+        });
+
+
+        // Category tabs functionality (with basic filtering)
         const categoryTabs = document.querySelectorAll('.category-tab');
-        
+        const toolCards = document.querySelectorAll('.tool-card');
+
         categoryTabs.forEach(tab => {
             tab.addEventListener('click', () => {
+                // Update active tab style
                 categoryTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                // In a real implementation, you would filter tools here
+
+                const selectedCategory = tab.getAttribute('data-category');
+
+                // Filter tool cards
+                toolCards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-tool-category');
+                    if (selectedCategory === 'all' || selectedCategory === cardCategory) {
+                        card.style.display = 'flex'; // Show card (use flex as set in CSS)
+                    } else {
+                        card.style.display = 'none'; // Hide card
+                    }
+                });
             });
         });
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                const targetId = this.getAttribute('href');
+                 // Check if it's just '#' or links to a valid element
+                if (targetId === '#' || !document.querySelector(targetId)) {
+                    // If it's just # or target doesn't exist, maybe scroll to top or do nothing
+                     // e.preventDefault(); // Prevent default jump only if needed
+                    return; // Exit if it's not a valid internal link
+                 }
+
+                e.preventDefault(); // Prevent default jump only for valid internal links
+                document.querySelector(targetId).scrollIntoView({
                     behavior: 'smooth'
                 });
             });
@@ -883,12 +948,53 @@
 
         // Search functionality placeholder
         const searchInput = document.querySelector('.search-input');
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                alert('Search functionality would be implemented here');
-                // In a real implementation, you would search through tools
-            }
+        searchInput.addEventListener('input', () => {
+             const searchTerm = searchInput.value.toLowerCase().trim();
+             toolCards.forEach(card => {
+                 const title = card.querySelector('.tool-title').textContent.toLowerCase();
+                 const description = card.querySelector('.tool-description').textContent.toLowerCase();
+                 // Make sure card is potentially visible based on category first (if needed)
+                 // Basic search: check title and description
+                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                     // Consider category filtering as well if active
+                     const currentActiveTab = document.querySelector('.category-tab.active');
+                     const selectedCategory = currentActiveTab ? currentActiveTab.getAttribute('data-category') : 'all';
+                     const cardCategory = card.getAttribute('data-tool-category');
+
+                     if(selectedCategory === 'all' || selectedCategory === cardCategory) {
+                        card.style.display = 'flex';
+                     } else {
+                        // Hide if search matches but category doesn't
+                        // card.style.display = 'none';
+                        // OR keep it simple and let category filter dominate later?
+                        // For now, let's prioritize search result visibility if tab is 'all'
+                        if (selectedCategory === 'all') {
+                            card.style.display = 'flex';
+                        } else {
+                           // If specific category selected, hide if search matches but category doesn't
+                           card.style.display = 'none';
+                        }
+                     }
+                 } else {
+                     card.style.display = 'none';
+                 }
+             });
         });
+        // Clear search results when input is empty
+         searchInput.addEventListener('keyup', (e) => {
+             if(searchInput.value.trim() === '') {
+                 // Re-apply category filter when search is cleared
+                 const currentActiveTab = document.querySelector('.category-tab.active');
+                 if(currentActiveTab) {
+                    currentActiveTab.click(); // Simulate click to re-apply filter
+                 }
+             }
+         });
+
+
+         // Set current year in footer
+         document.getElementById('current-year').textContent = new Date().getFullYear();
+
     </script>
 </body>
 </html>
