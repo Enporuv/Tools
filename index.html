@@ -224,11 +224,32 @@
             border-radius: 2px;
         }
 
+        /* Tools Grid */
+    .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Default grid for smaller screens */
+        gap: 2rem;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+        /* ... other mobile/tablet styles ... */
+    }
+
+    /* Add this within or after your existing responsive adjustments */
+    @media (min-width: 993px) { /* Apply only for screen widths larger than 992px */
         .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 1fr; /* Single column for desktop */
         }
+    }
+
+    @media (max-width: 768px) {
+        /* ... other mobile styles ... */
+    }
+
+    @media (max-width: 576px) {
+        /* ... other small mobile styles ... */
+    }
 
         .tool-card {
             background: white;
